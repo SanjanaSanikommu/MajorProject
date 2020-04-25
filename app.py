@@ -14,23 +14,25 @@ app = Flask(__name__)
 
 @app.route('/')
 def root():
-    return render_template('index.html')
+    return render_template('index1.html')
 
-@app.route('/images/<crime>')
-def download_file(Paasbaan):
-    return send_from_directory(app.config['images'], Paasbaan)
 
 @app.route('/index.html')
 def index():
     return render_template('index.html')
 
+
 @app.route('/work.html')
 def work():
     return render_template('work.html')
 
-@app.route('/about.html')
+@app.route('/enter.html')
+def enter():
+    return render_template('enter.html')
+
+@app.route('/option.html')
 def about():
-    return render_template('about.html')
+    return render_template('option.html')
 
 @app.route('/contact.html')
 def contact():
@@ -60,7 +62,7 @@ def predict():
         data = data[cols]
 
         data['timestamp'] = pd.to_datetime(data['timestamp'].astype(str), errors='coerce')
-        data['timestamp'] = pd.to_datetime(data['timestamp'], format = '%d-%m-%Y %H:%M:%S')
+        data['timestamp'] = pd.to_datetime(data['timestamp'])
         column_1 = data.iloc[:,0]
         DT=pd.DataFrame({"year": column_1.dt.year,
               "month": column_1.dt.month,
@@ -94,7 +96,7 @@ def predict():
 
 
 
-    return render_template('result.html', prediction = my_prediction)
+    return render_template('result.html', prediction = my_prediction,loca = location.address,lati=latlong)
 
 
 if __name__ == '__main__':
